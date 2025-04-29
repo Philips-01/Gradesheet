@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade Sheet</title>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+    <style>
+    body {
+        background: #f7f9fc;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    table {
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    th {
+        background-color: #4a90e2;
+        color: white;
+        text-align: center;
+    }
+
+    td {
+        vertical-align: middle;
+        text-align: center;
+    }
+
+    input[type="number"], input[type="text"] {
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 6px 10px;
+        transition: all 0.3s ease-in-out;
+        width: 100%;
+    }
+
+    input[type="number"]:focus, input[type="text"]:focus {
+        border-color: #4a90e2;
+        outline: none;
+        box-shadow: 0 0 5px rgba(74, 144, 226, 0.4);
+    }
+
+    .btn-warning {
+        background-color: #ffb74d;
+        border: none;
+        font-weight: bold;
+        font-size: 1.1rem;
+        transition: background 0.3s ease;
+    }
+
+    .btn-warning:hover {
+        background-color: #ffa726;
+    }
+
+    #total_score, #average_score, #average_grade, #remark_text {
+        font-weight: bold;
+        font-size: 1.1rem;
+        color: #333;
+    }
+
+    #remark_text {
+        color: #2e7d32;
+    }
+
+    #remark_img {
+        margin-left: 10px;
+        border-radius: 8px;
+        border: 2px solid #ccc;
+    }
+
+    .table-responsive {
+        overflow-x: auto;
+    }
+
+    @media screen and (max-width: 768px) {
+        th, td {
+            font-size: 0.9rem;
+        }
+    }
+</style>
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 mt-5">
+                <h4 style="text-align: center;">GradeSheet Calculator</h4>
+                <table class="table table-striped table-bordered table-responsive">
+                    <tr>
+                        <th>Subject</th>
+                        <th>Score</th>
+                        <th>Grade</th>
+                    </tr>
+                    
+                    <tr>
+                        <td>Mathematics</td>
+                        <td> <input type="number" class="form-control" name="math_score" id="math_score" oninput="
+                        calculate_grade(this.value, 'math_grade')"> </td>
+                        <td> <input type="text" name="math_grade" id="math_grade" disabled> </td>
+                    </tr>
+
+                    <tr>
+                        <td>English</td>
+                        <td> <input type="number" class="form-control" name="eng_score" id="eng_score" oninput="
+                        calculate_grade(this.value, 'eng_grade')"> </td>
+                        <td> <input type="text" name="eng_grade" id="eng_grade" disabled> </td>
+                    </tr>
+
+                    <tr>
+                        <td>Chemistry</td>
+                        <td> <input type="number" class="form-control" name="chem_score" id="chem_score" oninput="
+                        calculate_grade(this.value, 'chem_grade')"> </td>
+                        <td> <input type="text" name="chem_grade" id="chem_grade" disabled> </td>
+                    </tr>
+
+                    <tr>
+                        <td>Physics</td>
+                        <td> <input type="number" class="form-control" name="phy_score" id="phy_score" oninput="
+                        calculate_grade(this.value, 'phy_grade')"> </td>
+                        <td> <input type="text" name="phy_grade" id="phy_grade" disabled> </td>
+                    </tr>
+
+                    <tr>
+                        <td>Biology</td>
+                        <td> <input type="number" class="form-control" name="bio_score" id="bio_score" oninput="
+                        calculate_grade(this.value, 'bio_grade')"> </td>
+                        <td> <input type="text" name="bio_grade" id="bio_grade" disabled> </td>
+                    </tr>
+
+                    <tr>
+                        <td>Agricultural Science</td>
+                        <td> <input type="number" class="form-control" name="agric_score" id="agric_score" oninput="
+                        calculate_grade(this.value, 'agric_grade')"> </td>
+                        <td> <input type="text" name="agric_grade" id="agric_grade" disabled> </td>
+                    </tr>
+
+                    <tr>
+                        <td>Economics</td>
+                        <td> <input type="number" class="form-control" name="econs_score" id="econs_score" oninput="
+                        calculate_grade(this.value, 'econs_grade')"> </td>
+                        <td> <input type="text" name="econs_grade" id="econs_grade" disabled> </td>
+                    </tr>
+
+                    <tr>
+                        <td>Civic-Education</td>
+                        <td> <input type="number" class="form-control" name="civic_score" id="civic_score" oninput="
+                        calculate_grade(this.value, 'civic_grade')"> </td>
+                        <td> <input type="text" name="civic_grade" id="civic_grade" disabled> </td>
+                    </tr>
+                </table>
+                
+                <button class="btn btn-warning mt-2 col-12" onclick="accumulate_result()">Accumulate Result</button>
+
+                <table class="table mt-2" style="border: 0%; border: white;">
+                    <tr>
+                        <td>Total:</td>
+                        <td> <p id="total_score"></p> </td>
+                    </tr>
+                    <tr>
+                        <td>Average:</td>
+                        <td> <p id="average_score"></p> </td>
+                        <td> <p id="average_grade"></p> </td>
+                    </tr>
+                </table>
+
+                <table class="table mt-4 mb-5" style="border: 0%; border-color: white;">
+                    <tr>
+                        <td>Remark:</td>
+                        <td> <p id="remark_text"></p> </td>
+                        <td> <img src="" id="remark_img" alt="" style="display: none; width: 100px;"> </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="jquery.js">
+
+    </script>
+    <script src="grade.js"></script>
+</body>
+</html>
